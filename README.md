@@ -1,6 +1,35 @@
 # FFMpeg_iOS
 ![ffmpeg](https://upload-images.jianshu.io/upload_images/1721864-a28aecdd02d51beb.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
+# 调用命令行将视频转换为一组图片
+```
+dispatch_async(dispatch_get_global_queue(0, 0), ^{
+NSString *moviePath = [[NSBundle mainBundle] pathForResource:@"movie" ofType:@"mp4"];
+NSString *imageName = @"image%d.jpg";
+NSString *imagesPath = [NSString stringWithFormat:@"%@/%@", [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject], imageName];
+
+int numberOfArgs = 6;
+char** arguments = calloc(numberOfArgs, sizeof(char*));
+
+arguments[0] = "ffmpeg";
+arguments[1] = "-i";
+arguments[2] = (char *)[moviePath UTF8String];
+arguments[3] = "-r";
+arguments[4] = "20";
+arguments[5] = (char *)[imagesPath UTF8String];
+
+int result = ffmpeg_main(numberOfArgs, arguments);
+NSLog(@"----------- %d", result);
+dispatch_async(dispatch_get_main_queue(), ^{
+[self presentViewController:[[ResultViewController alloc] init] animated:YES completion:^{
+
+}];
+});
+
+});
+```
+![2019-01-14 13_38_42.gif](https://upload-images.jianshu.io/upload_images/1721864-40b0a2948dd62800.gif?imageMogr2/auto-orient/strip%7CimageView2/2/w/400)
+
 # FFmpeg命令行功能
 
 ***相关的命令行网络比较多，这里搜集整理了一些，整理备用，同时感谢共享***
