@@ -30,7 +30,9 @@
     [playerView settingPlayerItemWithUrl:[NSURL fileURLWithPath:moviePath]];
 }
 
-- (IBAction)converterBtnAction:(id)sender {
+- (IBAction)converterBtnAction:(UIButton *)sender {
+    sender.enabled = NO;
+    [sender setTitle:@"ing" forState:UIControlStateNormal];
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         NSString *moviePath = [[NSBundle mainBundle] pathForResource:@"movie" ofType:@"mp4"];
         NSString *imageName = @"image%d.jpg";
@@ -49,6 +51,8 @@
         int result = ffmpeg_main(numberOfArgs, arguments);
         NSLog(@"----------- %d", result);
         dispatch_async(dispatch_get_main_queue(), ^{
+            sender.enabled = YES;
+            [sender setTitle:@"Converter" forState:UIControlStateNormal];
             [self presentViewController:[[ResultViewController alloc] init] animated:YES completion:^{
                 
             }];
