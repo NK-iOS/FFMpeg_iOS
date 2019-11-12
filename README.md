@@ -1,4 +1,5 @@
 # FFMpeg_iOS
+`FF_VERSION="4.1"`
 ![ffmpeg](https://upload-images.jianshu.io/upload_images/1721864-a28aecdd02d51beb.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 # 调用命令行将视频转换为一组图片
